@@ -133,7 +133,7 @@ public class NestedClassProcessor {
     final Map<VarVersionPair, String> mapNewNames = new HashMap<VarVersionPair, String>();
 
     enclosingMethod.getOrBuildGraph().iterateExprents(new DirectGraph.ExprentIterator() {
-      @Override
+//      @Override
       public int processExprent(Exprent exprent) {
         List<Exprent> lst = exprent.getAllExprents(true);
         lst.add(exprent);
@@ -281,7 +281,7 @@ public class NestedClassProcessor {
       for (final MethodWrapper method : node.getWrapper().getMethods()) {
         if (method.root != null) { // neither abstract, nor native
           method.getOrBuildGraph().iterateExprents(new DirectGraph.ExprentIterator() {
-            @Override
+//            @Override
             public int processExprent(Exprent exprent) {
               List<Exprent> lst = exprent.getAllExprents(true);
               lst.add(exprent);
@@ -520,7 +520,7 @@ public class NestedClassProcessor {
         }
 
         method.getOrBuildGraph().iterateExprents(new DirectGraph.ExprentIterator() {
-          @Override
+//          @Override
           public int processExprent(Exprent exprent) {
             if (exprent.type == Exprent.EXPRENT_ASSIGNMENT) {
               AssignmentExprent assignExpr = (AssignmentExprent)exprent;

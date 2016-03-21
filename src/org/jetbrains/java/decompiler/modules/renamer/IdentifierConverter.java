@@ -269,7 +269,7 @@ public class IdentifierConverter implements NewClassNameBuilder {
     }
   }
 
-  @Override
+//  @Override
   public String buildNewClassname(String className) {
     return interceptor.getName(className);
   }

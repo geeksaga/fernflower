@@ -101,7 +101,7 @@ public class VarTypeProcessor {
 
   private static void resetExprentTypes(DirectGraph graph) {
     graph.iterateExprents(new DirectGraph.ExprentIterator() {
-      @Override
+//      @Override
       public int processExprent(Exprent exprent) {
         List<Exprent> lst = exprent.getAllExprents(true);
         lst.add(exprent);
@@ -124,7 +124,7 @@ public class VarTypeProcessor {
 
   private boolean processVarTypes(DirectGraph graph) {
     return graph.iterateExprents(new DirectGraph.ExprentIterator() {
-      @Override
+//      @Override
       public int processExprent(Exprent exprent) {
         return checkTypeExprent(exprent) ? 0 : 1;
       }

@@ -15,13 +15,6 @@
  */
 package org.jetbrains.java.decompiler.struct.match;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 import org.jetbrains.java.decompiler.modules.decompiler.exps.ExitExprent;
 import org.jetbrains.java.decompiler.modules.decompiler.exps.Exprent;
 import org.jetbrains.java.decompiler.modules.decompiler.exps.FunctionExprent;
@@ -30,6 +23,8 @@ import org.jetbrains.java.decompiler.modules.decompiler.stats.Statement;
 import org.jetbrains.java.decompiler.struct.gen.VarType;
 import org.jetbrains.java.decompiler.struct.match.IMatchable.MatchProperties;
 import org.jetbrains.java.decompiler.struct.match.MatchNode.RuleValue;
+
+import java.util.*;
 
 
 public class MatchEngine {
@@ -114,7 +109,8 @@ public class MatchEngine {
     for(String line : lines) {
       
       List<String> properties = new ArrayList<String>(Arrays.asList(line.split("\\s+"))); // split on any number of whitespaces
-      if(properties.get(0).isEmpty()) {
+//      if(properties.get(0).isEmpty()) {
+      if(properties.get(0).length() == 0) {
         properties.remove(0);
       }
       
@@ -183,19 +179,22 @@ public class MatchEngine {
       }
       
       if(stack.isEmpty()) { // first line, root node
-        stack.push(matchNode);
+//        stack.push(matchNode);
+        stack.addFirst(matchNode);
       } else {
       
         // return to the correct parent on the stack  
         int new_depth = line.lastIndexOf(' ', depth) + 1;
         for(int i = new_depth; i <= depth; ++i) {
-          stack.pop();
+//          stack.pop();
+          stack.removeFirst();
         }
   
         // insert new node
         stack.getFirst().addChild(matchNode);
-        stack.push(matchNode);
-        
+//        stack.push(matchNode);
+        stack.addFirst(matchNode);
+
         depth = new_depth; 
       }
     }

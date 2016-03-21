@@ -38,7 +38,7 @@ public class ConverterHelper implements IIdentifierRenamer {
   private int methodCounter = 0;
   private final Set<String> setNonStandardClassNames = new HashSet<String>();
 
-  @Override
+//  @Override
   public boolean toBeRenamed(Type elementType, String className, String element, String descriptor) {
     String value = elementType == Type.ELEMENT_CLASS ? className : element;
     return value == null || value.length() == 0 || value.length() <= 2 || KEYWORDS.contains(value) || Character.isDigit(value.charAt(0))
@@ -47,7 +47,7 @@ public class ConverterHelper implements IIdentifierRenamer {
 
   // TODO: consider possible conflicts with not renamed classes, fields and methods!
   // We should get all relevant information here.
-  @Override
+//  @Override
   public String getNextClassName(String fullName, String shortName) {
 
     if (shortName == null) {
@@ -75,12 +75,12 @@ public class ConverterHelper implements IIdentifierRenamer {
     }
   }
 
-  @Override
+//  @Override
   public String getNextFieldName(String className, String field, String descriptor) {
     return "field_" + (fieldCounter++);
   }
 
-  @Override
+//  @Override
   public String getNextMethodName(String className, String method, String descriptor) {
     return "method_" + (methodCounter++);
   }

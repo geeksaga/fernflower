@@ -47,13 +47,21 @@ public class LazyLoader {
   }
 
   public ConstantPool loadPool(String classname) {
-    try (DataInputFullStream in = getClassStream(classname)) {
-      if (in != null) {
+    try {
+      DataInputFullStream in = getClassStream(classname);
+      if (in == null) return null;
+
+//    try (DataInputFullStream in = getClassStream(classname)) {
+//      if (in != null) {
+      try {
         in.discard(8);
         return new ConstantPool(in);
       }
+      finally {
+        in.close();
+      }
 
-      return null;
+//      return null;
     }
     catch (IOException ex) {
       throw new RuntimeException(ex);
@@ -63,8 +71,13 @@ public class LazyLoader {
   public byte[] loadBytecode(StructMethod mt, int codeFullLength) {
     String className = mt.getClassStruct().qualifiedName;
 
-    try (DataInputFullStream in = getClassStream(className)) {
-      if (in != null) {
+    try {
+      DataInputFullStream in = getClassStream(className);
+      if (in == null) return null;
+
+//    try (DataInputFullStream in = getClassStream(className)) {
+//      if (in != null) {
+      try {
         in.discard(8);
 
         ConstantPool pool = mt.getClassStruct().getPool();
@@ -117,6 +130,9 @@ public class LazyLoader {
 
           break;
         }
+      }
+      finally {
+        in.close();
       }
 
       return null;

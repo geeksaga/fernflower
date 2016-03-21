@@ -95,7 +95,8 @@ public class ImportCollector {
     boolean existsDefaultClass = (context.getClass(currentPackageSlash + nshort) != null
                                   && !npackage.equals(currentPackagePoint)) // current package
                                  || (context.getClass(nshort) != null 
-                                  && !currentPackagePoint.isEmpty());  // default package
+//                                  && !currentPackagePoint.isEmpty());  // default package
+                                  && currentPackagePoint.length() > 0);  // default package
 
     if (existsDefaultClass ||
         (mapSimpleNames.containsKey(nshort) && !npackage.equals(mapSimpleNames.get(nshort)))) {
@@ -148,7 +149,8 @@ public class ImportCollector {
       // exclude a current class or one of the nested ones, java.lang and empty packages
       if (!setNotImportedNames.contains(ent.getKey()) &&
           !JAVA_LANG_PACKAGE.equals(ent.getValue()) &&
-          !ent.getValue().isEmpty()) {
+//          !ent.getValue().isEmpty()) {
+          ent.getValue().length() > 0) {
         res.add(ent.getValue() + "." + ent.getKey());
       }
     }

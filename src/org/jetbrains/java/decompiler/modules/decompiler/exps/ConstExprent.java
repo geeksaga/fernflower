@@ -34,7 +34,7 @@ import java.util.Map.Entry;
 public class ConstExprent extends Exprent {
   private static final Map<Integer, String> ESCAPES;
   static {
-    ESCAPES = new HashMap<>();
+    ESCAPES = new HashMap<Integer, String>();
     ESCAPES.put(new Integer(0x8), "\\b");   /* \u0008: backspace BS */
     ESCAPES.put(new Integer(0x9), "\\t");   /* \u0009: horizontal tab HT */
     ESCAPES.put(new Integer(0xA), "\\n");   /* \u000a: linefeed LF */

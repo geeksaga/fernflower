@@ -143,18 +143,30 @@ public class ConsoleDecompiler implements IBytecodeProvider, IResultSaver {
   // Interface IBytecodeProvider
   // *******************************************************************
 
-  @Override
+//    @Override
   public byte[] getBytecode(String externalPath, String internalPath) throws IOException {
     File file = new File(externalPath);
     if (internalPath == null) {
       return InterpreterUtil.getBytes(file);
     }
     else {
-      try (ZipFile archive = new ZipFile(file)) {
+      ZipFile archive = new ZipFile(file);
+      try {
         ZipEntry entry = archive.getEntry(internalPath);
-        if (entry == null) throw new IOException("Entry not found: " + internalPath);
+        if (entry == null) {
+          throw new IOException("Entry not found: " + internalPath);
+        }
         return InterpreterUtil.getBytes(archive, entry);
       }
+      finally {
+        archive.close();
+      }
+
+//      try (ZipFile archive = new ZipFile(file)) {
+//        ZipEntry entry = archive.getEntry(internalPath);
+//        if (entry == null) throw new IOException("Entry not found: " + internalPath);
+//        return InterpreterUtil.getBytes(archive, entry);
+//      }
     }
   }
 
@@ -166,7 +178,7 @@ public class ConsoleDecompiler implements IBytecodeProvider, IResultSaver {
     return new File(root, path).getAbsolutePath();
   }
 
-  @Override
+//  @Override
   public void saveFolder(String path) {
     File dir = new File(getAbsolutePath(path));
     if (!(dir.mkdirs() || dir.isDirectory())) {
@@ -174,7 +186,7 @@ public class ConsoleDecompiler implements IBytecodeProvider, IResultSaver {
     }
   }
 
-  @Override
+//  @Override
   public void copyFile(String source, String path, String entryName) {
     try {
       InterpreterUtil.copyFile(new File(source), new File(getAbsolutePath(path), entryName));
@@ -184,18 +196,26 @@ public class ConsoleDecompiler implements IBytecodeProvider, IResultSaver {
     }
   }
 
-  @Override
+//    @Override
   public void saveClassFile(String path, String qualifiedName, String entryName, String content, int[] mapping) {
     File file = new File(getAbsolutePath(path), entryName);
-    try (Writer out = new OutputStreamWriter(new FileOutputStream(file), "UTF8")) {
-      out.write(content);
+    try {
+      Writer out = new OutputStreamWriter(new FileOutputStream(file), "UTF8");
+      try {
+        out.write(content);
+      } finally {
+        out.close();
+      }
+
+//        try (Writer out = new OutputStreamWriter(new FileOutputStream(file), "UTF8")) {
+//            out.write(content);
     }
     catch (IOException ex) {
       DecompilerContext.getLogger().writeMessage("Cannot write class file " + file, ex);
     }
   }
 
-  @Override
+//    @Override
   public void createArchive(String path, String archiveName, Manifest manifest) {
     File file = new File(getAbsolutePath(path), archiveName);
     try {
@@ -213,12 +233,12 @@ public class ConsoleDecompiler implements IBytecodeProvider, IResultSaver {
     }
   }
 
-  @Override
+//    @Override
   public void saveDirEntry(String path, String archiveName, String entryName) {
     saveClassEntry(path, archiveName, null, entryName, null);
   }
 
-  @Override
+//    @Override
   public void copyEntry(String source, String path, String archiveName, String entryName) {
     String file = new File(getAbsolutePath(path), archiveName).getPath();
 
@@ -226,15 +246,30 @@ public class ConsoleDecompiler implements IBytecodeProvider, IResultSaver {
       return;
     }
 
-    try (ZipFile srcArchive = new ZipFile(new File(source))) {
-      ZipEntry entry = srcArchive.getEntry(entryName);
-      if (entry != null) {
-        try (InputStream in = srcArchive.getInputStream(entry)) {
+    try {
+      ZipFile srcArchive = new ZipFile(new File(source));
+      try {
+        ZipEntry entry = srcArchive.getEntry(entryName);
+        if (entry != null) {
+          InputStream in = srcArchive.getInputStream(entry);
           ZipOutputStream out = mapArchiveStreams.get(file);
           out.putNextEntry(new ZipEntry(entryName));
           InterpreterUtil.copyStream(in, out);
+          in.close();
         }
-      }
+    } finally {
+      srcArchive.close();
+    }
+
+//        try (ZipFile srcArchive = new ZipFile(new File(source))) {
+//            ZipEntry entry = srcArchive.getEntry(entryName);
+//            if (entry != null) {
+//                try (InputStream in = srcArchive.getInputStream(entry)) {
+//                    ZipOutputStream out = mapArchiveStreams.get(file);
+//                    out.putNextEntry(new ZipEntry(entryName));
+//                    InterpreterUtil.copyStream(in, out);
+//                }
+//            }
     }
     catch (IOException ex) {
       String message = "Cannot copy entry " + entryName + " from " + source + " to " + file;
@@ -242,7 +277,7 @@ public class ConsoleDecompiler implements IBytecodeProvider, IResultSaver {
     }
   }
 
-  @Override
+//    @Override
   public void saveClassEntry(String path, String archiveName, String qualifiedName, String entryName, String content) {
     String file = new File(getAbsolutePath(path), archiveName).getPath();
 
@@ -277,7 +312,7 @@ public class ConsoleDecompiler implements IBytecodeProvider, IResultSaver {
     return added;
   }
 
-  @Override
+//  @Override
   public void closeArchive(String path, String archiveName) {
     String file = new File(getAbsolutePath(path), archiveName).getPath();
     try {

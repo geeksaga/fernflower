@@ -50,7 +50,7 @@ public class MethodProcessorRunnable implements Runnable {
     this.parentContext = parentContext;
   }
 
-  @Override
+//  @Override
   public void run() {
     DecompilerContext.setCurrentContext(parentContext);
 

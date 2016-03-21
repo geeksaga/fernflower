@@ -57,7 +57,7 @@ public final class StructUtils {
     final StructGeneralAttribute generalAttribute = methodStruct.getWithKey(ATTRIBUTE_LOCAL_VARIABLE_TABLE);
     if (generalAttribute instanceof StructLocalVariableTableAttribute) {
       final StructLocalVariableTableAttribute table = (StructLocalVariableTableAttribute) generalAttribute;
-      return Collections.unmodifiableList(new ArrayList<>(table.getMapVarNames().values()));
+      return Collections.unmodifiableList(new ArrayList<String>(table.getMapVarNames().values()));
     }
     return Collections.emptyList();
   }

@@ -62,7 +62,7 @@ public class Fernflower implements IDecompiledData {
     return structContext;
   }
 
-  @Override
+//  @Override
   public String getClassEntryName(StructClass cl, String entryName) {
     ClassNode node = classesProcessor.getMapRootClasses().get(cl.qualifiedName);
     if (node.type != ClassNode.CLASS_ROOT) {
@@ -79,7 +79,7 @@ public class Fernflower implements IDecompiledData {
     }
   }
 
-  @Override
+//  @Override
   public String getClassContent(StructClass cl) {
     try {
       TextBuffer buffer = new TextBuffer(ClassesProcessor.AVERAGE_CLASS_SIZE);

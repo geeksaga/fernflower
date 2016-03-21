@@ -103,7 +103,7 @@ public class VarVersionsProcessor {
 
   private static void updateVersions(DirectGraph graph, final Map<VarVersionPair, Integer> versions) {
     graph.iterateExprents(new DirectGraph.ExprentIterator() {
-      @Override
+//      @Override
       public int processExprent(Exprent exprent) {
         List<Exprent> lst = exprent.getAllExprents(true);
         lst.add(exprent);
@@ -257,7 +257,7 @@ public class VarVersionsProcessor {
 
     // set new vars
     graph.iterateExprents(new DirectGraph.ExprentIterator() {
-      @Override
+//      @Override
       public int processExprent(Exprent exprent) {
         List<Exprent> lst = exprent.getAllExprents(true);
         lst.add(exprent);

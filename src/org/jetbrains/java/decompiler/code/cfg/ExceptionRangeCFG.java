@@ -113,7 +113,8 @@ public class ExceptionRangeCFG {
 
     String ret = "";
     for (String exception : setExceptionStrings) {
-      if (!ret.isEmpty()) {
+//      if (!ret.isEmpty()) {
+      if (ret.length() > 0) {
         ret += ":";
       }
       ret += exception;

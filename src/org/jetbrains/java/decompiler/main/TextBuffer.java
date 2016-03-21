@@ -279,7 +279,8 @@ public class TextBuffer {
     // now join empty lines
     for (int i = res.size()-1; i > 0 ; i--) {
       String s = res.get(i);
-      if (s.trim().isEmpty()) {
+//      if (s.trim().isEmpty()) {
+      if (s.trim().length() == 0) {
         res.set(i-1, res.get(i-1).concat(s));
         res.remove(i);
       }

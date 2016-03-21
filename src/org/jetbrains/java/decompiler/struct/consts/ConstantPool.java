@@ -221,7 +221,7 @@ public class ConstantPool implements NewClassNameBuilder {
     return ln;
   }
 
-  @Override
+//  @Override
   public String buildNewClassname(String className) {
     VarType vt = new VarType(className, true);
 

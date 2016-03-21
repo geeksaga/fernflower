@@ -120,7 +120,7 @@ public class SingleClassesTest {
     if (parent != null) {
       final String pattern = classFile.getName().replace(".class", "") + "\\$.+\\.class";
       File[] inner = parent.listFiles(new FilenameFilter() {
-        @Override
+//        @Override
         public boolean accept(File dir, String name) {
           return name.matches(pattern);
         }
