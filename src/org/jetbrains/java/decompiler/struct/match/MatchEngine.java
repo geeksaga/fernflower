@@ -15,6 +15,13 @@
  */
 package org.jetbrains.java.decompiler.struct.match;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import org.jetbrains.java.decompiler.modules.decompiler.exps.ExitExprent;
 import org.jetbrains.java.decompiler.modules.decompiler.exps.Exprent;
 import org.jetbrains.java.decompiler.modules.decompiler.exps.FunctionExprent;
@@ -23,8 +30,6 @@ import org.jetbrains.java.decompiler.modules.decompiler.stats.Statement;
 import org.jetbrains.java.decompiler.struct.gen.VarType;
 import org.jetbrains.java.decompiler.struct.match.IMatchable.MatchProperties;
 import org.jetbrains.java.decompiler.struct.match.MatchNode.RuleValue;
-
-import java.util.*;
 
 
 public class MatchEngine {
@@ -194,7 +199,7 @@ public class MatchEngine {
         stack.getFirst().addChild(matchNode);
 //        stack.push(matchNode);
         stack.addFirst(matchNode);
-
+        
         depth = new_depth; 
       }
     }

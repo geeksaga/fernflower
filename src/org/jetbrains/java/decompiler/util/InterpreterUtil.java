@@ -17,9 +17,9 @@ package org.jetbrains.java.decompiler.util;
 
 import org.jetbrains.java.decompiler.main.DecompilerContext;
 import org.jetbrains.java.decompiler.main.extern.IFernflowerPreferences;
+import java.nio.channels.FileChannel;
 
 import java.io.*;
-import java.nio.channels.FileChannel;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -53,9 +53,6 @@ public class InterpreterUtil {
     finally {
       inStream.close();
     }
-//    try (FileInputStream in = new FileInputStream(source); FileOutputStream out = new FileOutputStream(target)) {
-//      copyStream(in, out);
-//    }
   }
 
   public static void copyStream(InputStream in, OutputStream out) throws IOException {
@@ -82,16 +79,7 @@ public class InterpreterUtil {
 
   private static byte[] readAndClose(InputStream stream, int length) throws IOException {
     try {
-      byte[] bytes = new byte[length];
-      int n = 0, off = 0;
-      while (n < length) {
-        int count = stream.read(bytes, off + n, length - n);
-        if (count < 0) {
-          throw new IOException("premature end of stream");
-        }
-        n += count;
-      }
-      return bytes;
+      return readBytes(stream, length);
     }
     finally {
       stream.close();
@@ -117,16 +105,6 @@ public class InterpreterUtil {
     if (stream.skip(length) != length) {
       throw new IOException("premature end of stream");
     }
-  }
-
-  public static String getIndentString(int length) {
-    if (length == 0) return "";
-    StringBuilder buf = new StringBuilder();
-    String indent = (String)DecompilerContext.getProperty(IFernflowerPreferences.INDENT_STRING);
-    while (length-- > 0) {
-      buf.append(indent);
-    }
-    return buf.toString();
   }
 
   public static boolean equalSets(Collection<?> c1, Collection<?> c2) {
@@ -168,18 +146,6 @@ public class InterpreterUtil {
     }
 
     return false;
-  }
-
-  public static boolean isPrintableUnicode(char c) {
-    int t = Character.getType(c);
-    return t != Character.UNASSIGNED && t != Character.LINE_SEPARATOR && t != Character.PARAGRAPH_SEPARATOR &&
-           t != Character.CONTROL && t != Character.FORMAT && t != Character.PRIVATE_USE && t != Character.SURROGATE;
-  }
-
-  public static String charToUnicodeLiteral(int value) {
-    String sTemp = Integer.toHexString(value);
-    sTemp = ("0000" + sTemp).substring(sTemp.length());
-    return "\\u" + sTemp;
   }
 
   public static String makeUniqueKey(String name, String descriptor) {

@@ -83,9 +83,16 @@ public class SingleClassesTest {
   @Test public void testMethodReferenceSameName() { doTest("pkg/TestMethodReferenceSameName"); }
   @Test public void testMethodReferenceLetterClass() { doTest("pkg/TestMethodReferenceLetterClass"); }
   @Test public void testMemberAnnotations() { doTest("pkg/TestMemberAnnotations"); }
+  @Test public void testMoreAnnotations() { doTest("pkg/MoreAnnotations"); }
+  @Test public void testTypeAnnotations() { doTest("pkg/TypeAnnotations"); }
   @Test public void testStaticNameClash() { doTest("pkg/TestStaticNameClash"); }
+  @Test public void testExtendingSubclass() { doTest("pkg/TestExtendingSubclass"); }
+  @Test public void testSyntheticAccess() { doTest("pkg/TestSyntheticAccess"); }
+  @Test public void testIllegalVarName() { doTest("pkg/TestIllegalVarName"); }
+  @Test public void testKotlinConstructor() { doTest("pkg/TestKotlinConstructorKt"); }
+  @Test public void testAsserts() { doTest("pkg/TestAsserts"); }
 
-  protected void doTest(String testFile, String... companionFiles) {
+  private void doTest(String testFile, String... companionFiles) {
     ConsoleDecompiler decompiler = fixture.getDecompiler();
 
     File classFile = new File(fixture.getTestDataDir(), "/classes/" + testFile + ".class");

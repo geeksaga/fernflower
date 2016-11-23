@@ -129,12 +129,6 @@ public class StructContext {
           } finally {
             in.close();
           }
-
-//        try (DataInputFullStream in = loader.getClassStream(file.getAbsolutePath(), null)) {
-//          StructClass cl = new StructClass(in, isOwn, loader);
-//          classes.put(cl.qualifiedName, cl);
-//          unit.addClass(cl, filename);
-//          loader.addClassLink(cl.qualifiedName, new LazyLoader.Link(LazyLoader.Link.CLASS, file.getAbsolutePath(), null));
         }
         catch (IOException ex) {
           String message = "Corrupted class file: " + file;
